@@ -1,0 +1,43 @@
+.active-click-carousel__with-btn {
+    margin: 0 50px 0 60px;
+}
+
+.active-click-carousel__container {
+
+    .alice-carousel__prev-btn,
+    .alice-carousel__next-btn {
+        width: 50px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .alice-carousel__prev-btn-wrapper,
+        .alice-carousel__next-btn-wrapper {
+            width: 100%;
+            border: 1px solid #efecec;
+            cursor: pointer;
+            border-radius: 5px;
+            background-color: #fff;
+
+            .alice-carousel__prev-btn-item,
+            .alice-carousel__next-btn-item {
+                font-size: 20px;
+                padding: 0 5px !important;
+                width: 100% !important;
+                text-align: center;
+            }
+        }
+    }
+
+    .alice-carousel__prev-btn {
+        left: -60px;
+    }
+
+    .alice-carousel__next-btn {
+        right: -50px;
+    }
+
+    .active-click-carousel__item {
+        cursor: pointer
+    }
+}
