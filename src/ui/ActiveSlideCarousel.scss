@@ -1,0 +1,28 @@
+.active-slide-carousel__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .active-slide-carousel__wrapper {
+        width: calc(100% - 100px);
+    }
+
+    .active-slide-carousel__prev-btn, .active-slide-carousel__next-btn {
+        border: 1px solid #efecec;
+        border-radius: 5px;
+        background-color: #fff;
+        height: 40px;
+        width: 40px;
+        font-family: monospace;
+        font-size: 20px;
+        color: #348dda
+    }
+
+    .active-slide-carousel__prev-btn::after {
+        content: "<";
+    }
+
+    .active-slide-carousel__next-btn::after {
+        content: ">";
+    }
+}

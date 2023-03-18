@@ -1,0 +1,34 @@
+@import "react-alice-carousel/lib/alice-carousel.css";
+
+.multi-carousel__container .alice-carousel__prev-btn, 
+.multi-carousel__container .alice-carousel__next-btn {
+    position: absolute !important;
+    top: 0;
+    height: calc(100% - 30px) !important;
+    padding: 0px !important;
+}
+
+.multi-carousel__no-dots .alice-carousel__prev-btn,
+.multi-carousel__no-dots .alice-carousel__next-btn {
+    height: 100% !important;
+}
+
+.multi-carousel__container .alice-carousel__prev-btn-item span::after,
+.multi-carousel__container .alice-carousel__next-btn-item span::after {
+    font-family: monospace;
+}
+
+.multi-carousel__container .alice-carousel__dots {
+    margin: 10px !important;
+}
+
+.multi-carousel__item {
+    margin-right: 10px;
+    border: 1px solid #efecec;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.multi-carousel__active {
+    border:2px solid red;
+}
