@@ -1,5 +1,9 @@
 .normal-carousel__container {
 
+    .alice-carousel__wrapper {
+        clip-path: inset(0px 10px 0px 0px) !important;
+    }
+
     .alice-carousel__prev-btn,
     .alice-carousel__next-btn {
         width: unset !important;
