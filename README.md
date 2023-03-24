@@ -26,21 +26,18 @@ This widget works as ***list view*** to display the ***dynamic*** data as a caro
 
 * **Normal carousel**: content rotators without a built-in action support. However, you can add actions to the slides in the content.
 
-    ![normal](./normal.gif)
+    ![normal](./assets/normal.gif)
   
 * **Active on click carousel**: content rotators with active slide. you can set the active slide and fire it's action on click the slide.
     > ***Note***: adding an action to the slides content in this type will override the method that handles setting the active slide.
 
-    ![active-click](./active-click.gif)
+    ![active-click](./assets/active-click.gif)
 
 * **Active on slide carousel**: content rotators with active slide. switching the active slide happens automatically when clicking next/prev buttons.
 
-    ![active-slide](./active-slide.gif)
+    ![active-slide](./assets/active-slide.gif)
 
-## Demo project
-[link to sandbox]
-
-## Issues, suggestions and feature requests
+## Issues, suggestions
 1. This widget built only to handle **dynamic** data only.
  
 2. Adding an action to the slides content in ***active on click*** type will override the method that handles setting the active slide. if you wish to do that, use the ***Normal type***.
