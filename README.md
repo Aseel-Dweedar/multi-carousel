@@ -6,19 +6,14 @@ Please visit [React Alice Carousel](https://www.npmjs.com/package/react-alice-ca
 
 ## Features
 
-* dynamic content
-* Support action for the slides
-* Custom animation modes
-* Auto Height
-* Auto Width
-* Mobile friendly
-* Responsive design
+* dynamic content.
+* Support action for the slides.
+* Auto Height, and Auto Width.
+* Responsive design.
 
-    **For normal and active on click types**
-    * Auto Play
-    * Infinite loop
-    * Swipe to slide
-    * Touch and Drag support
+  **For Normal and Active on click types**
+  * Auto Play, and Infinite loop.
+  * Swipe to slide, Touch and Drag support.
 
 ## Usage
 
@@ -43,7 +38,6 @@ This widget works as ***list view*** to display the ***dynamic*** data as a caro
 2. Adding an action to the slides content in ***active on click*** type will override the method that handles setting the active slide. if you wish to do that, use the ***Normal type***.
  
 3. Every carousel has an auto generated unique class name starting with "-a". You can use it in case you have multiple carousel in the same page.
-
 ## Development and contribution
 
 ```
@@ -107,3 +101,6 @@ This widget works as ***list view*** to display the ***dynamic*** data as a caro
     .alice-carousel__play-btn
     .alice-carousel__play-btn-item
 ```
+
+***************
+ LinkedIn [Aseel Dweedar](https://www.linkedin.com/in/aseel-dweedar)
