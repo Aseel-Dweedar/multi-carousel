@@ -57,10 +57,10 @@ function getProperties(values, defaultProperties, target) {
   if (!values.autoPlay) {
     hidePropertiesIn(defaultProperties, values, ["autoPlayControls", "autoPlayDirection"]);
   }
-  if (values.carouselType === 'normal') {
+  if (values.carouselType === "normal") {
     hidePropertiesIn(defaultProperties, values, ["action"]);
   }
-  if (values.carouselType === 'slide') {
+  if (values.carouselType === "slide") {
     hidePropertiesIn(defaultProperties, values, ["infinite", "autoPlay", "disableButtonsControls", "disableDotsControls", "autoPlayControls", "autoPlayDirection", "animationDuration", "keyboardNavigation", "mouseTracking", "touchTracking"]);
   }
   return defaultProperties;
