@@ -1,12 +1,18 @@
 import { createElement, useEffect, useState, useRef } from "react";
-import '../ui/NormalCarousel.scss'
-import '../ui/ActiveClickCarousel.scss'
-import AliceCarousel from 'react-alice-carousel'
-import { v4 as uuidv4 } from 'uuid';
-import { defaultResponsive, getNewResponsiveValues, commonClasses, normalCarouselClasses, activeClickClasses, classesAction } from "./helper"
+import "../ui/NormalCarousel.scss";
+import "../ui/ActiveClickCarousel.scss";
+import AliceCarousel from "react-alice-carousel";
+import { v4 as uuidv4 } from "uuid";
+import {
+    defaultResponsive,
+    getNewResponsiveValues,
+    commonClasses,
+    normalCarouselClasses,
+    activeClickClasses,
+    classesAction
+} from "./helper";
 
 export default function NormalCarousel(props) {
-
     const carouselParent = useRef();
     const [carousel_items, set_carousel_items] = useState([]);
     const [responsive, setResponsive] = useState({ ...defaultResponsive });
@@ -17,22 +23,22 @@ export default function NormalCarousel(props) {
         that is not covering the window's full width
     */
     const setNewResponsive = () => {
-        let rate = window.innerWidth / carouselParent.current.clientWidth
+        let rate = window.innerWidth / carouselParent.current.clientWidth;
         if (rate > 1.35) {
-            let newResponsive = getNewResponsiveValues(rate)
-            setResponsive({ ...newResponsive })
+            let newResponsive = getNewResponsiveValues(rate);
+            setResponsive({ ...newResponsive });
         } else {
-            setResponsive({ ...defaultResponsive })
+            setResponsive({ ...defaultResponsive });
         }
-    }
+    };
 
     const addOrRemoveClassName = (node, action) => {
         if (action === classesAction.remove) {
-            node.classList.remove(commonClasses.active)
+            node.classList.remove(commonClasses.active);
         } else {
-            node.classList.add(commonClasses.active)
+            node.classList.add(commonClasses.active);
         }
-    }
+    };
 
     /*
         in case of "infinite" carousel the node will be node list "Array"
@@ -41,18 +47,18 @@ export default function NormalCarousel(props) {
     */
     const changeActiveClass = (node, action) => {
         if (node?.length) {
-            node.forEach((item) => {
-                addOrRemoveClassName(item, action)
+            node.forEach(item => {
+                addOrRemoveClassName(item, action);
             });
         } else if (node) {
-            addOrRemoveClassName(node, action)
+            addOrRemoveClassName(node, action);
         }
-    }
+    };
 
     /*
         idx-"" is the common unique class between original item and the cloned one
     */
-    const getIdxClassName = (e) => {
+    const getIdxClassName = e => {
         let clickedItem = e.target;
 
         // in case of clicking element inside the item we need the main div with "idx-" class name
@@ -61,97 +67,107 @@ export default function NormalCarousel(props) {
             clickedItem = clickedItem.parentNode;
         }
 
-        let classNames = clickedItem.className.split(' ');
-        return classNames?.filter(item => item.includes('idx'))?.[0]
-
-    }
+        let classNames = clickedItem.className.split(" ");
+        return classNames?.filter(item => item.includes("idx"))?.[0];
+    };
 
     const onCardClicked = (e, action) => {
-
-        if (action?.canExecute) action.execute()
+        if (action?.canExecute) action.execute();
 
         // remove active class from original and cloned item
         let activeNode = document.querySelector(`.${uniqueClass}`)?.querySelectorAll(`.${commonClasses.active}`);
-        changeActiveClass(activeNode, classesAction.remove)
+        changeActiveClass(activeNode, classesAction.remove);
 
-        let idxClass = getIdxClassName(e)
+        let idxClass = getIdxClassName(e);
 
         // add active class for both original and cloned item
         let itemToSetActive = document.querySelector(`.${uniqueClass}`)?.querySelectorAll(`.${idxClass}`);
-        changeActiveClass(itemToSetActive, classesAction.add)
-    }
+        changeActiveClass(itemToSetActive, classesAction.add);
+    };
 
     /*
       set the active item after the carousel has already been initialized
     */
     const onInitialized = () => {
-        if (props.carouselType === 'active') {
-            let itemToSetActive = document.querySelector(`.${uniqueClass}`)?.querySelectorAll('.idx-0');
-            changeActiveClass(itemToSetActive, classesAction.add)
+        if (props.carouselType === "active") {
+            let itemToSetActive = document.querySelector(`.${uniqueClass}`)?.querySelectorAll(".idx-0");
+            changeActiveClass(itemToSetActive, classesAction.add);
         }
-    }
+    };
 
     useEffect(() => {
-
         // set a unique class in case of using two different carousel instances in the same document
-        setUniqueClass("a-" + uuidv4())
+        setUniqueClass("a-" + uuidv4());
 
         if (!carouselParent.current) return;
 
         // handle resize window or carousel container
         const resizeObserver = new ResizeObserver(() => {
-            setNewResponsive()
+            setNewResponsive();
         });
 
         resizeObserver.observe(carouselParent.current);
 
         return () => resizeObserver.disconnect();
-    }, [])
+    }, []);
 
     useEffect(() => {
         if (props.data?.status === "available" && !carousel_items?.length) {
-            set_carousel_items(props.data.items.map((item, i) => (
-                <div
-                    key={i}
-                    onClick={props.carouselType === 'active' ? (e) => onCardClicked(e, props.action?.get(item)) : undefined}
-                    className={`${commonClasses.item} idx-${i} ${props.carouselType === 'active' ? activeClickClasses.active_click_clickable_item : normalCarouselClasses.normal_item}`}>
-                    {props.content.get(item)}
-                </div>
-            )))
+            set_carousel_items(
+                props.data.items.map((item, i) => (
+                    <div
+                        key={i}
+                        onClick={
+                            props.carouselType === "active" ? e => onCardClicked(e, props.action?.get(item)) : undefined
+                        }
+                        className={`${commonClasses.item} idx-${i} ${
+                            props.carouselType === "active"
+                                ? activeClickClasses.active_click_clickable_item
+                                : normalCarouselClasses.normal_item
+                        }`}
+                    >
+                        {props.content.get(item)}
+                    </div>
+                ))
+            );
         }
-    }, [props.data])
+    }, [props.data]);
 
-    return <div
-        className={[commonClasses.multi_container, uniqueClass,
-            props.carouselType === 'active' ? activeClickClasses.active_click_container : normalCarouselClasses.normal_container,
-            props.disableDotsControls ? commonClasses.no_dots : "",
-            (!props.disableButtonsControls && props.carouselType === 'active') ? activeClickClasses.active_click_with_btn : ""].join(" ")}
-        ref={carouselParent}>
-        {
-            carousel_items?.length ?
+    return (
+        <div
+            className={[
+                commonClasses.multi_container,
+                uniqueClass,
+                props.carouselType === "active"
+                    ? activeClickClasses.active_click_container
+                    : normalCarouselClasses.normal_container,
+                props.disableDotsControls ? commonClasses.no_dots : "",
+                !props.disableButtonsControls && props.carouselType === "active"
+                    ? activeClickClasses.active_click_with_btn
+                    : ""
+            ].join(" ")}
+            ref={carouselParent}
+        >
+            {carousel_items?.length ? (
                 <AliceCarousel
                     items={carousel_items}
                     responsive={responsive}
-
                     infinite={props.infinite}
-
                     autoPlay={props.autoPlay}
                     autoPlayDirection={props.autoPlayDirection}
                     autoPlayControls={props.autoPlayControls}
-
                     disableButtonsControls={props.disableButtonsControls}
                     disableDotsControls={props.disableDotsControls}
-
                     animationDuration={props.animationDuration}
                     animationType={props.animationType}
-
                     keyboardNavigation={props.keyboardNavigation}
                     mouseTracking={props.mouseTracking}
                     touchTracking={props.touchTracking}
-
                     onInitialized={onInitialized}
-                /> : 
+                />
+            ) : (
                 <div className={commonClasses.multi_empty_container}></div>
-        }
-    </div>;
+            )}
+        </div>
+    );
 }

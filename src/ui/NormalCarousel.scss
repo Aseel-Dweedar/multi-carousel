@@ -1,5 +1,4 @@
 .normal-carousel__container {
-
     .alice-carousel__wrapper {
         clip-path: inset(0px 10px 0px 0px) !important;
     }
@@ -31,10 +30,10 @@
     .alice-carousel__prev-btn {
         left: 0;
         border-radius: 5px 0 0 5px;
-        background: linear-gradient(90deg, rgba(149, 149, 149, 0.20) 10%, rgba(255, 255, 255, 0) 100%);
+        background: linear-gradient(90deg, rgba(149, 149, 149, 0.2) 10%, rgba(255, 255, 255, 0) 100%);
 
         &:hover {
-            background: linear-gradient(90deg, rgba(149, 149, 149, 0.20) 40%, rgba(255, 255, 255, 0) 100%)
+            background: linear-gradient(90deg, rgba(149, 149, 149, 0.2) 40%, rgba(255, 255, 255, 0) 100%);
         }
     }
 
@@ -42,10 +41,10 @@
         right: 0;
         margin: 0 10px;
         border-radius: 0 5px 5px 0;
-        background: linear-gradient(270deg, rgba(149, 149, 149, 0.20) 10%, rgba(255, 255, 255, 0) 100%);
+        background: linear-gradient(270deg, rgba(149, 149, 149, 0.2) 10%, rgba(255, 255, 255, 0) 100%);
 
         &:hover {
-            background: linear-gradient(270deg, rgba(149, 149, 149, 0.20) 40%, rgba(255, 255, 255, 0) 100%)
+            background: linear-gradient(270deg, rgba(149, 149, 149, 0.2) 40%, rgba(255, 255, 255, 0) 100%);
         }
     }
 }
