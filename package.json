@@ -1,10 +1,10 @@
 {
   "name": "multicarousel",
   "widgetName": "MultiCarousel",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "multi carousel",
   "copyright": "© Mendix Technology BV 2022. All rights reserved.",
-  "author": "Aseel",
+  "author": "Aseel Dweidar",
   "engines": {
     "node": ">=16"
   },
