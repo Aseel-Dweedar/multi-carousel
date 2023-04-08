@@ -107,6 +107,10 @@ This widget works as ***list view*** to display the ***dynamic*** data as a caro
 ```
     .multi-carousel__error
 ```
+**7- Loading:**
+```
+    .multi-carousel__loading
+```
 
 ***************
  LinkedIn [Aseel Dweedar](https://www.linkedin.com/in/aseel-dweedar)

@@ -4,7 +4,6 @@ import "../ui/ActiveClickCarousel.scss";
 import AliceCarousel from "react-alice-carousel";
 import { v4 as uuidv4 } from "uuid";
 import {
-    defaultResponsive,
     getNewResponsiveValues,
     commonClasses,
     normalCarouselClasses,
@@ -15,7 +14,7 @@ import {
 export default function NormalCarousel(props) {
     const carouselParent = useRef();
     const [carousel_items, set_carousel_items] = useState([]);
-    const [responsive, setResponsive] = useState({ ...defaultResponsive });
+    const [responsive, setResponsive] = useState({ ...props.defaultResponsive });
     const [uniqueClass, setUniqueClass] = useState("");
 
     /*
@@ -25,10 +24,10 @@ export default function NormalCarousel(props) {
     const setNewResponsive = () => {
         let rate = window.innerWidth / carouselParent.current.clientWidth;
         if (rate > 1.35) {
-            let newResponsive = getNewResponsiveValues(rate);
+            let newResponsive = getNewResponsiveValues(rate, props.defaultResponsive);
             setResponsive({ ...newResponsive });
         } else {
-            setResponsive({ ...defaultResponsive });
+            setResponsive({ ...props.defaultResponsive });
         }
     };
 
