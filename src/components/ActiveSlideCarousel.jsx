@@ -140,6 +140,9 @@ export default function ActiveSlideCarousel(props) {
     const onCarouselInit = e => {
         setNumberOfDisplayedItems(e.itemsInSlide);
         setResponsive({ ...responsive });
+
+        let firstItemAction = props.action?.get(props.data.items?.[0]);
+        onSlideClicked(firstItemAction);
     };
 
     /*

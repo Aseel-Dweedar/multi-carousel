@@ -1,6 +1,6 @@
 @import "react-alice-carousel/lib/alice-carousel.css";
 
-.multi-carousel__container .alice-carousel__prev-btn, 
+.multi-carousel__container .alice-carousel__prev-btn,
 .multi-carousel__container .alice-carousel__next-btn {
     position: absolute !important;
     top: 0;
@@ -25,6 +25,7 @@
 .multi-carousel__item {
     margin-right: 10px;
     border: 1px solid #efecec;
+    background-color: #fff;
     border-radius: 4px;
     overflow: hidden;
 }

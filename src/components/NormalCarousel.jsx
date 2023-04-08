@@ -34,9 +34,9 @@ export default function NormalCarousel(props) {
 
     const addOrRemoveClassName = (node, action) => {
         if (action === classesAction.remove) {
-            node.classList.remove(commonClasses.active);
+            node?.classList?.remove(commonClasses.active);
         } else {
-            node.classList.add(commonClasses.active);
+            node?.classList?.add(commonClasses.active);
         }
     };
 
@@ -44,14 +44,13 @@ export default function NormalCarousel(props) {
         in case of "infinite" carousel the node will be node list "Array"
         because the carousel create a copy of all the items
         that why we need change the active class on both nodes - the carousel render both -
+        and with no "infinite" the node list will be length of "1"
     */
     const changeActiveClass = (node, action) => {
         if (node?.length) {
             node.forEach(item => {
                 addOrRemoveClassName(item, action);
             });
-        } else if (node) {
-            addOrRemoveClassName(node, action);
         }
     };
 
@@ -86,12 +85,15 @@ export default function NormalCarousel(props) {
     };
 
     /*
-      set the active item after the carousel has already been initialized
+      set the active item after the carousel has already been initialized or resized
+      NOTE: the carousel moves to the beginning when the carousel resized
     */
-    const onInitialized = () => {
+    const onInitializedOrResized = () => {
         if (props.carouselType === "active") {
-            let itemToSetActive = document.querySelector(`.${uniqueClass}`)?.querySelectorAll(".idx-0");
-            changeActiveClass(itemToSetActive, classesAction.add);
+            let firstCarouselItem = document.querySelector(`.${uniqueClass}`)?.querySelector(".idx-0");
+            if (!firstCarouselItem?.classList?.contains(commonClasses.active)) {
+                firstCarouselItem?.click();
+            }
         }
     };
 
@@ -122,7 +124,7 @@ export default function NormalCarousel(props) {
                         }
                         className={`${commonClasses.item} idx-${i} ${
                             props.carouselType === "active"
-                                ? activeClickClasses.active_click_clickable_item
+                                ? activeClickClasses.active_click_item
                                 : normalCarouselClasses.normal_item
                         }`}
                     >
@@ -163,7 +165,8 @@ export default function NormalCarousel(props) {
                     keyboardNavigation={props.keyboardNavigation}
                     mouseTracking={props.mouseTracking}
                     touchTracking={props.touchTracking}
-                    onInitialized={onInitialized}
+                    onInitialized={onInitializedOrResized}
+                    onResized={onInitializedOrResized}
                 />
             ) : (
                 <div className={commonClasses.multi_empty_container}></div>
