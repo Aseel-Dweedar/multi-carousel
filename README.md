@@ -38,6 +38,8 @@ This widget works as ***list view*** to display the ***dynamic*** data as a caro
 2. Adding an action to the slides content in ***active on click*** type will override the method that handles setting the active slide. if you wish to do that, use the ***Normal type***.
  
 3. Every carousel has an auto generated unique class name starting with "-a". You can use it in case you have multiple carousel in the same page.
+
+4. For **active on click/slide** carousel, the carousel will automatically slide to the first item, active it and fire its action.
 ## Development and contribution
 
 ```
@@ -100,6 +102,10 @@ This widget works as ***list view*** to display the ***dynamic*** data as a caro
 
     .alice-carousel__play-btn
     .alice-carousel__play-btn-item
+```
+**6- Error:**
+```
+    .multi-carousel__error
 ```
 
 ***************

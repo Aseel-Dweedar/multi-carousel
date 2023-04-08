@@ -59,7 +59,8 @@ export const commonClasses = {
     multi_empty_container: "multi-carousel__empty-container",
     item: "multi-carousel__item",
     active: "multi-carousel__active",
-    no_dots: "multi-carousel__no-dots"
+    no_dots: "multi-carousel__no-dots",
+    error: "multi-carousel__error"
 };
 
 export const normalCarouselClasses = {
