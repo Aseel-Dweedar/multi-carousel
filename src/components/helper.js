@@ -1,33 +1,8 @@
 /*
- default undefined - The key is the breakpoint
- (default is the result of: () => window.innerWidth or innerWidth property if the last presented).
-*/
-export const defaultResponsive = {
-    0: {
-        items: 1
-    },
-    620: {
-        items: 2
-    },
-    1024: {
-        items: 3
-    },
-    1200: {
-        items: 4
-    },
-    1700: {
-        items: 5
-    },
-    2250: {
-        items: 6
-    }
-};
-
-/*
  rebuilt responsive object depending on the container width
  using the ratio of the width of the box to the width of the window
 */
-export const getNewResponsiveValues = rate => {
+export const getNewResponsiveValues = (rate, defaultResponsive) => {
     let newResponsive = {};
     let keys = Object.keys(defaultResponsive);
 
@@ -60,7 +35,8 @@ export const commonClasses = {
     item: "multi-carousel__item",
     active: "multi-carousel__active",
     no_dots: "multi-carousel__no-dots",
-    error: "multi-carousel__error"
+    error: "multi-carousel__error",
+    loading: "multi-carousel__loading"
 };
 
 export const normalCarouselClasses = {

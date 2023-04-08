@@ -1,7 +1,7 @@
 import { createElement, useEffect, useState, useRef, useCallback } from "react";
 import AliceCarousel from "react-alice-carousel";
 import "../ui/ActiveSlideCarousel.scss";
-import { defaultResponsive, getNewResponsiveValues, commonClasses, activeSlideClasses, statusList } from "./helper";
+import { getNewResponsiveValues, commonClasses, activeSlideClasses, statusList } from "./helper";
 import { v4 as uuidv4 } from "uuid";
 
 export default function ActiveSlideCarousel(props) {
@@ -23,10 +23,10 @@ export default function ActiveSlideCarousel(props) {
     const setNewResponsive = () => {
         let rate = window.innerWidth / sliderContainer?.current?.clientWidth;
         if (rate > 1.4) {
-            let newResponsive = getNewResponsiveValues(rate);
+            let newResponsive = getNewResponsiveValues(rate, props.defaultResponsive);
             setResponsive({ ...newResponsive });
         } else {
-            setResponsive({ ...defaultResponsive });
+            setResponsive({ ...props.defaultResponsive });
         }
     };
 

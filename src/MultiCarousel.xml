@@ -34,6 +34,32 @@
                     <caption>Action</caption>
                     <description>Add onClick action from here.(No onClick sould be added to the content inside this widget, if you wish to do that, use "Normal" type)</description>
                 </property>
+            </propertyGroup>
+            <propertyGroup caption="Responsive Design">
+                <property key="items425" type="integer" defaultValue="1">
+                    <caption>Items on screen 425PX</caption>
+                    <description>Number of items on screen size 425PX</description>
+                </property>
+                <property key="items640" type="integer" defaultValue="2">
+                    <caption>Items on screen 640PX</caption>
+                    <description>Number of items on screen size 640PX</description>
+                </property>
+                <property key="items1024" type="integer" defaultValue="3">
+                    <caption>Items on screen 1024PX</caption>
+                    <description>Number of items on screen size 1024PX</description>
+                </property>
+                <property key="items1200" type="integer" defaultValue="4">
+                    <caption>Items on screen 1200PX</caption>
+                    <description>Number of items on screen size 1200PX</description>
+                </property>
+                <property key="items1600" type="integer" defaultValue="5">
+                    <caption>Items on screen 1600PX</caption>
+                    <description>Number of items on screen size 1600PX</description>
+                </property>
+                <property key="items2560" type="integer" defaultValue="6">
+                    <caption>Items on screen 2560PX</caption>
+                    <description>Number of items on screen size 2560PX</description>
+                </property>
                 <property key="content" type="widgets" dataSource="data" required="true">
                     <caption>Content</caption>
                     <description />
