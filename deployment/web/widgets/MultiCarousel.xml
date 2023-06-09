@@ -36,6 +36,14 @@
                 </property>
             </propertyGroup>
             <propertyGroup caption="Responsive Design">
+                <property key="itemsBehavior" type="enumeration" defaultValue="stretch">
+                    <caption>Items Behavior</caption>
+                    <description>When the number of item is less than the required number for the screen</description>
+                    <enumerationValues>
+                        <enumerationValue key="stretch">Stretch</enumerationValue>
+                        <enumerationValue key="extra">Create Empty Items</enumerationValue>
+                    </enumerationValues>
+                </property>
                 <property key="items425" type="integer" defaultValue="1">
                     <caption>Items on screen 425PX</caption>
                     <description>Number of items on screen size 425PX</description>
@@ -90,6 +98,14 @@
                 </property>
             </propertyGroup>
             <propertyGroup caption="Control">
+                <property key="buttonsStyle" type="enumeration" defaultValue="default">
+                    <caption>Buttons Style</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="default">Default Unstyled</enumerationValue>
+                        <enumerationValue key="styled">Styled Side Buttons</enumerationValue>
+                    </enumerationValues>
+                </property>
                 <property key="disableButtonsControls" type="boolean" defaultValue="false">
                     <caption>Disable Buttons Controls</caption>
                     <description />

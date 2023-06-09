@@ -1,11 +1,12 @@
-import { createElement, useEffect, useState, useRef, useCallback } from "react";
+import { createElement, useEffect, useState, useCallback } from "react";
 import AliceCarousel from "react-alice-carousel";
 import "../ui/ActiveSlideCarousel.scss";
-import { getNewResponsiveValues, commonClasses, activeSlideClasses, statusList } from "./helper";
+import { commonClasses, activeSlideClasses, statusList } from "./helper";
 import { v4 as uuidv4 } from "uuid";
 
 export default function ActiveSlideCarousel(props) {
-    const sliderContainer = useRef();
+    const [renderCarousel, setRenderCarousel] = useState(false);
+
     const [carousel_items, set_carousel_items] = useState([]);
     const [responsive, setResponsive] = useState(null);
     const [uniqueClass, setUniqueClass] = useState("");
@@ -15,20 +16,6 @@ export default function ActiveSlideCarousel(props) {
 
     // get the 'react-alice-carousel' built-in all method and properties
     const [carouselProperties, setCarouselProperties] = useState(null);
-
-    /*
-        this method built to handle if the carousel has been rendered inside a container
-        that is not covering the window's full width
-    */
-    const setNewResponsive = () => {
-        let rate = window.innerWidth / sliderContainer?.current?.clientWidth;
-        if (rate > 1.4) {
-            let newResponsive = getNewResponsiveValues(rate, props.defaultResponsive);
-            setResponsive({ ...newResponsive });
-        } else {
-            setResponsive({ ...props.defaultResponsive });
-        }
-    };
 
     /*
         Fired when reach the end of the slider or when resize the carousel
@@ -108,18 +95,30 @@ export default function ActiveSlideCarousel(props) {
         // Set current active item
         if (status === statusList.reset) {
             // querySelectorAll ==> the original item and the cloned one
-            // in this case the first one is the original -"react-alice-carouse" way of work-
             let firstSlide = document
                 .querySelector(`.${uniqueClass}`)
                 ?.querySelectorAll(`.${activeSlideClasses.first_item}`);
-            firstSlide[0]?.classList?.add(commonClasses.active);
+
+            // set the active item for the first item in the carousel that is not cloned one
+            for (let i = 0; i < firstSlide.length; i++) {
+                if (!firstSlide[i]?.parentElement?.classList?.contains("__cloned")) {
+                    firstSlide[i]?.classList?.add(commonClasses.active);
+                    break;
+                }
+            }
         } else if (status === statusList.goLast) {
             // querySelectorAll ==> the original item and the cloned one
-            // in this case the second one is the original -"react-alice-carouse" way of work-
             let lastSlide = document
                 .querySelector(`.${uniqueClass}`)
                 ?.querySelectorAll(`.${activeSlideClasses.last_item}`);
-            lastSlide[1]?.classList?.add(commonClasses.active);
+
+            // set the active item for the last item in the carousel that is not cloned one
+            for (let i = lastSlide.length - 1; i >= 0; i--) {
+                if (!lastSlide[i]?.parentElement?.classList?.contains("__cloned")) {
+                    lastSlide[i]?.classList?.add(commonClasses.active);
+                    break;
+                }
+            }
         } else {
             // not containing active means that the next/prev item is not appearing in the screen right now
             // slide when reach to the start/end of the active item
@@ -139,7 +138,7 @@ export default function ActiveSlideCarousel(props) {
     */
     const onCarouselInit = e => {
         setNumberOfDisplayedItems(e.itemsInSlide);
-        setResponsive({ ...responsive });
+        setResponsive({ ...props.defaultResponsive });
 
         let firstItemAction = props.action?.get(props.data.items?.[0]);
         onSlideClicked(firstItemAction);
@@ -150,7 +149,7 @@ export default function ActiveSlideCarousel(props) {
     */
     const onCarouselResize = e => {
         setNumberOfDisplayedItems(e.itemsInSlide);
-        setNewResponsive();
+        carouselProperties?.slideTo(0);
         resetSlider();
     };
 
@@ -161,23 +160,42 @@ export default function ActiveSlideCarousel(props) {
         if (action?.canExecute) action.execute();
     };
 
-    useEffect(() => {
-        if (props.data?.status === "available" && !carousel_items?.length) {
-            let newData = props.data.items.map((item, idx) => (
-                <div
-                    key={idx}
-                    className={`${commonClasses.item} ${
-                        idx === 0 ? activeSlideClasses.first_item + " " + commonClasses.active : ""
-                    } ${idx === props.data.items.length - 1 ? activeSlideClasses.last_item : ""}`}
-                >
-                    {props.content.get(item)}
-                </div>
-            ));
+    /*
+      set the items when render the widget or update the data
+    */
+    const setupCarouse = items => {
+        let newData = items.map((item, idx) => (
+            <div
+                key={idx}
+                className={`${commonClasses.item} ${
+                    idx === 0 ? activeSlideClasses.first_item + " " + commonClasses.active : ""
+                } ${idx === props.data.items.length - 1 ? activeSlideClasses.last_item : ""}`}
+            >
+                {props.content.get(item)}
+            </div>
+        ));
 
-            setNumberOfAllItems(newData.length - 1);
-            set_carousel_items(newData);
+        setNumberOfAllItems(newData.length - 1);
+        set_carousel_items(newData);
+    };
+
+    useEffect(() => {
+        // This condition is to prevent render the carousel before get the items "This happens at the first widget render"
+        if (props.data?.status === "available") {
+            setRenderCarousel(true);
         }
-    }, [props.data]);
+    }, [carousel_items]);
+
+    /*
+      when getting the item or updated it set the carousel items 
+    */
+    useEffect(() => {
+        if (props.data?.status === "available") {
+            setRenderCarousel(false);
+            setCurrentActiveIdx(0);
+            setupCarouse(props.data.items);
+        }
+    }, [props.data?.items]);
 
     useEffect(() => {
         // set a unique class in case of using two different carousel instances in the same document
@@ -188,14 +206,14 @@ export default function ActiveSlideCarousel(props) {
         set the responsive object after initialize the container so it take the correct dimensions
     */
     const carouselContainer = useCallback(node => {
-        if (node) setNewResponsive();
+        if (node) setResponsive({ ...props.defaultResponsive });
     }, []);
 
     return carousel_items?.length ? (
         <div className={activeSlideClasses.active_slide_container} ref={carouselContainer}>
             <button className={activeSlideClasses.prev_btn} onClick={prevClicked}></button>
-            <div className={[uniqueClass, activeSlideClasses.active_slide_wrapper].join(" ")} ref={sliderContainer}>
-                {responsive && (
+            <div className={[uniqueClass, activeSlideClasses.active_slide_wrapper].join(" ")}>
+                {responsive && renderCarousel && (
                     <AliceCarousel
                         // get the 'react-alice-carousel' all method and properties so we can override default next and previous buttons behavior
                         ref={el => setCarouselProperties(el)}

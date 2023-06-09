@@ -3,33 +3,17 @@ import "../ui/NormalCarousel.scss";
 import "../ui/ActiveClickCarousel.scss";
 import AliceCarousel from "react-alice-carousel";
 import { v4 as uuidv4 } from "uuid";
-import {
-    getNewResponsiveValues,
-    commonClasses,
-    normalCarouselClasses,
-    activeClickClasses,
-    classesAction
-} from "./helper";
+import { getRequiredItems, commonClasses, normalCarouselClasses, activeClickClasses, classesAction } from "./helper";
 
 export default function NormalCarousel(props) {
     const carouselParent = useRef();
-    const [carousel_items, set_carousel_items] = useState([]);
-    const [responsive, setResponsive] = useState({ ...props.defaultResponsive });
-    const [uniqueClass, setUniqueClass] = useState("");
 
-    /*
-        this method built to handle if the carousel has been rendered inside a container
-        that is not covering the window's full width
-    */
-    const setNewResponsive = () => {
-        let rate = window.innerWidth / carouselParent.current.clientWidth;
-        if (rate > 1.35) {
-            let newResponsive = getNewResponsiveValues(rate, props.defaultResponsive);
-            setResponsive({ ...newResponsive });
-        } else {
-            setResponsive({ ...props.defaultResponsive });
-        }
-    };
+    const [renderCarousel, setRenderCarousel] = useState(false);
+    const [dataItems, setDataItems] = useState([]);
+    const [carouselItems, setCarouselItems] = useState([]);
+    const [uniqueClass, setUniqueClass] = useState("");
+    const [carouselInfinite, setCarouselInfinite] = useState(props.infinite);
+    const [responsive, setResponsive] = useState(null);
 
     const addOrRemoveClassName = (node, action) => {
         if (action === classesAction.remove) {
@@ -84,58 +68,101 @@ export default function NormalCarousel(props) {
     };
 
     /*
-      set the active item after the carousel has already been initialized or resized
-      NOTE: the carousel moves to the beginning when the carousel resized
+      if the item behavior "create extra items" calculate the number of extra items and get the final number of carousel items
     */
-    const onInitializedOrResized = () => {
-        if (props.carouselType === "active") {
-            let firstCarouselItem = document.querySelector(`.${uniqueClass}`)?.querySelector(".idx-0");
-            if (!firstCarouselItem?.classList?.contains(commonClasses.active)) {
-                firstCarouselItem?.click();
+    const createCarouselItems = () => {
+        let extraItems = [];
+        if (props.itemsBehavior === "extra" && dataItems.length) {
+            let currentRequiredItems = getRequiredItems(props.defaultResponsive);
+
+            if (dataItems.length < currentRequiredItems) {
+                for (let i = 0; i < currentRequiredItems - dataItems.length; i++) {
+                    extraItems.push(<div className={commonClasses.extra_item}></div>);
+                }
+                setCarouselInfinite(false);
+            } else {
+                setCarouselInfinite(props.infinite);
             }
         }
+        setCarouselItems([...dataItems, ...extraItems]);
+        setRenderCarousel(true);
     };
+
+    /*
+      set the items when render the widget or update the data
+    */
+    const setupCarouse = items => {
+        let carouselItems = items.map((item, i) => (
+            <div
+                key={i}
+                onClick={props.carouselType === "active" ? e => onCardClicked(e, props.action?.get(item)) : undefined}
+                className={`${commonClasses.item} idx-${i} ${
+                    props.carouselType === "active"
+                        ? activeClickClasses.active_click_item
+                        : normalCarouselClasses.normal_item
+                }`}
+            >
+                {props.content.get(item)}
+            </div>
+        ));
+        setDataItems(carouselItems);
+    };
+
+    /*
+      set the active item after the carousel has already been initialized
+    */
+    const onInitialized = () => {
+        if (props.carouselType === "active") {
+            let firstCarouselItem = document.querySelector(`.${uniqueClass}`)?.querySelector(".idx-0");
+            firstCarouselItem?.click();
+        }
+    };
+
+    /*
+      on resize rerender the carousel to recalculate the extra items if necessary and reset the active item
+    */
+    const onResized = () => {
+        setRenderCarousel(false);
+        createCarouselItems();
+    };
+
+    /*
+      when getting the item or updated it, rerender the carousel to recalculate the extra items if necessary and reset the active item 
+    */
+    useEffect(() => {
+        if (props.data?.status === "available") {
+            setRenderCarousel(false);
+            setupCarouse(props.data.items);
+        }
+    }, [props.data?.items]);
+
+    /*
+      after getting the item or updated it and the item behavior "create extra items" calculate the number of extra items
+    */
+    useEffect(() => {
+        // This condition is to prevent calling createCarouselItems before get the items "This happens at the first widget render"
+        if (props.data?.status === "available") {
+            createCarouselItems();
+        }
+    }, [dataItems]);
 
     useEffect(() => {
         // set a unique class in case of using two different carousel instances in the same document
         setUniqueClass("a-" + uuidv4());
 
-        if (!carouselParent.current) return;
-
-        // handle resize window or carousel container
+        // set the responsive object after initialize the container so the carousel re-render and take the correct dimensions
+        // NOTE : force rerendering fix the bug with carousel overflow the parent container
         const resizeObserver = new ResizeObserver(() => {
-            setNewResponsive();
+            setResponsive({ ...props.defaultResponsive });
         });
-
         resizeObserver.observe(carouselParent.current);
 
         return () => resizeObserver.disconnect();
     }, []);
 
-    useEffect(() => {
-        if (props.data?.status === "available" && !carousel_items?.length) {
-            set_carousel_items(
-                props.data.items.map((item, i) => (
-                    <div
-                        key={i}
-                        onClick={
-                            props.carouselType === "active" ? e => onCardClicked(e, props.action?.get(item)) : undefined
-                        }
-                        className={`${commonClasses.item} idx-${i} ${
-                            props.carouselType === "active"
-                                ? activeClickClasses.active_click_item
-                                : normalCarouselClasses.normal_item
-                        }`}
-                    >
-                        {props.content.get(item)}
-                    </div>
-                ))
-            );
-        }
-    }, [props.data]);
-
     return (
         <div
+            ref={carouselParent}
             className={[
                 commonClasses.multi_container,
                 uniqueClass,
@@ -143,17 +170,18 @@ export default function NormalCarousel(props) {
                     ? activeClickClasses.active_click_container
                     : normalCarouselClasses.normal_container,
                 props.disableDotsControls ? commonClasses.no_dots : "",
-                !props.disableButtonsControls && props.carouselType === "active"
-                    ? activeClickClasses.active_click_with_btn
+                !props.disableButtonsControls && props.buttonsStyle === "styled"
+                    ? props.carouselType === "active"
+                        ? activeClickClasses.active_click_styled_btn
+                        : normalCarouselClasses.normal_styled_btn
                     : ""
             ].join(" ")}
-            ref={carouselParent}
         >
-            {carousel_items?.length ? (
+            {dataItems?.length && renderCarousel ? (
                 <AliceCarousel
-                    items={carousel_items}
+                    items={carouselItems}
                     responsive={responsive}
-                    infinite={props.infinite}
+                    infinite={carouselInfinite}
                     autoPlay={props.autoPlay}
                     autoPlayDirection={props.autoPlayDirection}
                     autoPlayControls={props.autoPlayControls}
@@ -164,8 +192,8 @@ export default function NormalCarousel(props) {
                     keyboardNavigation={props.keyboardNavigation}
                     mouseTracking={props.mouseTracking}
                     touchTracking={props.touchTracking}
-                    onInitialized={onInitializedOrResized}
-                    onResized={onInitializedOrResized}
+                    onInitialized={onInitialized}
+                    onResized={onResized}
                 />
             ) : (
                 <div className={commonClasses.multi_empty_container}></div>
