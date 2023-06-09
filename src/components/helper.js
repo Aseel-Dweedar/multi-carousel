@@ -1,17 +1,20 @@
-/*
- rebuilt responsive object depending on the container width
- using the ratio of the width of the box to the width of the window
-*/
-export const getNewResponsiveValues = (rate, defaultResponsive) => {
-    let newResponsive = {};
-    let keys = Object.keys(defaultResponsive);
+/* get the required number of items in the current screen size depend on responsive object */
+export const getRequiredItems = responsive => {
+    let screeWidth = window.innerWidth;
 
-    keys.forEach(key => {
-        let newValue = Math.round(defaultResponsive[key].items / rate);
-        newResponsive[key] = { items: Math.max(newValue, 1) };
-    });
-
-    return newResponsive;
+    if (screeWidth < 640) {
+        return responsive[0]?.items;
+    } else if (screeWidth >= 640 && screeWidth < 1024) {
+        return responsive[640]?.items;
+    } else if (screeWidth >= 1024 && screeWidth < 1200) {
+        return responsive[1024]?.items;
+    } else if (screeWidth >= 1200 && screeWidth < 1600) {
+        return responsive[1200]?.items;
+    } else if (screeWidth >= 1600 && screeWidth < 2560) {
+        return responsive[1600]?.items;
+    } else {
+        return responsive[2560]?.items;
+    }
 };
 
 /*
@@ -34,6 +37,7 @@ export const commonClasses = {
     multi_empty_container: "multi-carousel__empty-container",
     item: "multi-carousel__item",
     active: "multi-carousel__active",
+    extra_item: "multi-carousel__extra-item",
     no_dots: "multi-carousel__no-dots",
     error: "multi-carousel__error",
     loading: "multi-carousel__loading"
@@ -41,13 +45,14 @@ export const commonClasses = {
 
 export const normalCarouselClasses = {
     normal_container: "normal-carousel__container",
-    normal_item: "normal-carousel__item"
+    normal_item: "normal-carousel__item",
+    normal_styled_btn: "normal-carousel__styled-btn"
 };
 
 export const activeClickClasses = {
     active_click_container: "active-click-carousel__container",
     active_click_item: "active-click-carousel__item",
-    active_click_with_btn: "active-click-carousel__with-btn"
+    active_click_styled_btn: "active-click-carousel__styled-btn"
 };
 
 export const activeSlideClasses = {

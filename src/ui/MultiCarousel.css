@@ -1,13 +1,5 @@
 @import "react-alice-carousel/lib/alice-carousel.css";
 
-.multi-carousel__container .alice-carousel__prev-btn,
-.multi-carousel__container .alice-carousel__next-btn {
-    position: absolute !important;
-    top: 0;
-    height: calc(100% - 30px) !important;
-    padding: 0px !important;
-}
-
 .multi-carousel__no-dots .alice-carousel__prev-btn,
 .multi-carousel__no-dots .alice-carousel__next-btn {
     height: 100% !important;
@@ -31,5 +23,5 @@
 }
 
 .multi-carousel__active {
-    border:2px solid red;
+    border: 2px solid red;
 }

@@ -55,6 +55,8 @@ export function MultiCarousel(props) {
                         mouseTracking={props.mouseTracking}
                         touchTracking={props.touchTracking}
                         defaultResponsive={defaultResponsive}
+                        itemsBehavior={props.itemsBehavior}
+                        buttonsStyle={props.buttonsStyle}
                     />
                 )) ||
                 (props.carouselType === "slide" && (

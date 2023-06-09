@@ -1,7 +1,7 @@
 {
   "name": "multicarousel",
   "widgetName": "MultiCarousel",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "multi carousel",
   "copyright": "© Mendix Technology BV 2022. All rights reserved.",
   "author": "Aseel Dweidar",
@@ -10,7 +10,7 @@
   },
   "license": "Apache-2.0",
   "config": {
-    "projectPath": "./",
+    "projectPath": "../../",
     "mendixHost": "http://localhost:8080",
     "developmentPort": 3000
   },

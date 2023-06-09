@@ -2,10 +2,16 @@
     .alice-carousel__wrapper {
         clip-path: inset(0px 10px 0px 0px) !important;
     }
+}
 
+.normal-carousel__styled-btn {
     .alice-carousel__prev-btn,
     .alice-carousel__next-btn {
+        position: absolute !important;
+        top: 0;
         width: unset !important;
+        height: calc(100% - 30px) !important;
+        padding: 0px !important;
 
         .alice-carousel__next-btn-wrapper,
         .alice-carousel__prev-btn-wrapper {

@@ -65,7 +65,9 @@ export function getProperties(values, defaultProperties, target) {
             "animationDuration",
             "keyboardNavigation",
             "mouseTracking",
-            "touchTracking"
+            "touchTracking",
+            "buttonsStyle",
+            "itemsBehavior"
         ]);
     }
     return defaultProperties;

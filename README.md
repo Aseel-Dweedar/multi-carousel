@@ -14,10 +14,11 @@ Please visit [React Alice Carousel](https://www.npmjs.com/package/react-alice-ca
   **For Normal and Active on click types**
   * Auto Play, and Infinite loop.
   * Swipe to slide, Touch and Drag support.
+  * The option of Stretch/unstretch the items to fill the available space.
 
 ## Usage
 
-This widget works as ***list view*** to display the ***dynamic*** data as a carousel. contains 3 types:
+This widget is used to display the ***dynamic*** data as a carousel. contains 3 types:
 
 * **Normal carousel**: content rotators without a built-in action support. However, you can add actions to the slides in the content.
 
@@ -53,34 +54,49 @@ This widget works as ***list view*** to display the ***dynamic*** data as a caro
 
 ## UI (CSS classes)
 
+**1- Common classes:**
+```
+// Extra Items
+.multi-carousel__extra-item
 
-**1- Normal carousel:**
+// Loading
+.multi-carousel__loading
+
+// Error
+.multi-carousel__error
+
+<!--  From alice carousel package classes -->
+
+// buttons style
+.alice-carousel__prev-btn
+.alice-carousel__prev-btn-item
+
+// Dots
+.alice-carousel__dots
+.alice-carousel__dots-item
+
+// Auto play buttons
+.alice-carousel__play-btn
+.alice-carousel__play-btn-item
+```
+
+**2- Normal carousel:**
 ```
 .normal-carousel__container
 .normal-carousel__item
 
-<!-- For Buttons style use alice carousel package classes -->
-
-    .alice-carousel__prev-btn
-    .alice-carousel__prev-btn-item
-
-    .alice-carousel__next-btn
-    .alice-carousel__next-btn-item
+// The pre-styled buttons parent container
+.normal-carousel__styled-btn
 ```
 **2- Active on click carousel:**
 ```
 .active-click-carousel__container
 .active-click-carousel__item
 
-<!-- For Buttons style use alice carousel package classes -->
-
-    .alice-carousel__prev-btn
-    .alice-carousel__prev-btn-item
-
-    .alice-carousel__next-btn
-    .alice-carousel__next-btn-item
+// The pre-styled buttons parent container
+.active-click-carousel__styled-btn
 ```
-**3- Active on slide carousel:**
+**4- Active on slide carousel:**
 ```
 .active-slide-carousel__container
 
@@ -88,28 +104,6 @@ This widget works as ***list view*** to display the ***dynamic*** data as a caro
 
 .active-slide-carousel__prev-btn
 .active-slide-carousel__next-btn
-```
-**4- Dots:**
-```
-<!-- From alice carousel package classes -->
-
-    .alice-carousel__dots
-    .alice-carousel__dots-item
-```
-**5- Auto play buttons:**
-```
-<!-- From alice carousel package classes -->
-
-    .alice-carousel__play-btn
-    .alice-carousel__play-btn-item
-```
-**6- Error:**
-```
-    .multi-carousel__error
-```
-**7- Loading:**
-```
-    .multi-carousel__loading
 ```
 
 ***************
