@@ -41,3 +41,12 @@ _First release._
 
 ### Fixed
  - Fix the bug with the active-side-carousel with the calculating the position of first and last item in some cases.
+
+## [3.0.0] - Oct 13, 2023
+
+### Added
+- Static data type support.
+
+### Changed
+- Properties order in the Mendix.
+- The naming of the types in the widget.
