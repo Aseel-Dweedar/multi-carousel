@@ -60,6 +60,12 @@ function getProperties(values, defaultProperties, target) {
   if (values.carouselType === "normal") {
     hidePropertiesIn(defaultProperties, values, ["action"]);
   }
+  if (values.dataType === "dynamic") {
+    hidePropertiesIn(defaultProperties, values, ["staticItems"]);
+  }
+  if (values.dataType === "static") {
+    hidePropertiesIn(defaultProperties, values, ["carouselType", "data", "action", "content"]);
+  }
   if (values.carouselType === "slide") {
     hidePropertiesIn(defaultProperties, values, ["infinite", "autoPlay", "disableButtonsControls", "disableDotsControls", "autoPlayControls", "autoPlayDirection", "animationDuration", "keyboardNavigation", "mouseTracking", "touchTracking", "buttonsStyle", "itemsBehavior"]);
   }

@@ -1,8 +1,7 @@
 import { createElement } from "react";
-import NormalCarousel from "./components/NormalCarousel";
 
 export function preview() {
-    return <NormalCarousel />;
+    return <div />;
 }
 
 export function getPreviewCss() {

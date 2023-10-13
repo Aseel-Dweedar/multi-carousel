@@ -1,46 +1,50 @@
-## MultiCarousel
+## Multi Carousel / Slider
 
-Multi Carousel widget is a web widget for building ***dynamic*** content rotators. built based on "react-alice-carousel" library.
-
-Please visit [React Alice Carousel](https://www.npmjs.com/package/react-alice-carousel) for more information.
+Multi Carousel widget is a web widget for building ***static*** and ***dynamic*** content rotators. also it could be used as a **Slider**.
 
 ## Features
 
-* dynamic content.
-* Support action for the slides.
-* Auto Height, and Auto Width.
+* Static or dynamic content.
+* Support adding action and auto active item.
+* Auto Play.
+* Stop/Pause buttons.
+* Infinite loop.
+* Change loop direction.
+* Swipe to card.
+* Touch and Drag support.
+* Stretch/unstretch the items to fill the available space.
+* Auto Height and Width.
 * Responsive design.
-
-  **For Normal and Active on click types**
-  * Auto Play, and Infinite loop.
-  * Swipe to slide, Touch and Drag support.
-  * The option of Stretch/unstretch the items to fill the available space.
+* Styled control buttons.
 
 ## Usage
 
-This widget is used to display the ***dynamic*** data as a carousel. contains 3 types:
+### 1. Carousel type:
 
-* **Normal carousel**: content rotators without a built-in action support. However, you can add actions to the slides in the content.
+* **Normal Carousel**: content rotators without an active card or built-in action support. However, you can add actions to the card manually from the content.
 
     ![normal](./src/assets/normal.gif)
   
-* **Active on click carousel**: content rotators with active slide. you can set the active slide and fire it's action on click the slide.
-    > ***Note***: adding an action to the slides content in this type will override the method that handles setting the active slide.
+* **Carousel with Active Card**: content rotators with active card and action support. the card will set active and its action will be fired on click the card.
+    > ***Note***: adding an action to the **cards content** (from Mendix properties) will override the method that handles setting the active card.
 
     ![active-click](./src/assets/active-click.gif)
 
-* **Active on slide carousel**: content rotators with active slide. switching the active slide happens automatically when clicking next/prev buttons.
+### 1. Slider
 
-    ![active-slide](./src/assets/active-slide.gif)
+Only support for Dynamic data type, allow users to slide the items using "left/right" buttons. the active card will be auto set, and it's action will be auto fired.
+
+![active-slide](./src/assets/active-slide.gif)
 
 ## Issues, suggestions
-1. This widget built only to handle **dynamic** data only.
+
+1. The static data type doesn't support adding a built-in action, you can use the active carousel or the slider with a static data by turn it to a dynamic content.
  
-2. Adding an action to the slides content in ***active on click*** type will override the method that handles setting the active slide. if you wish to do that, use the ***Normal type***.
+2. Adding an action to the cards content in ***Carousel with Active Card*** type will override the method that handles setting the active card. if you wish to do that, use the ***Normal Carousel***.
  
 3. Every carousel has an auto generated unique class name starting with "-a". You can use it in case you have multiple carousel in the same page.
 
-4. For **active on click/slide** carousel, the carousel will automatically slide to the first item, active it and fire its action.
+4. For **Carousel with Active Card** and the **Slider**, the widget will automatically slide to the first item, active it and fire its action.
 ## Development and contribution
 
 ```
@@ -88,7 +92,7 @@ This widget is used to display the ***dynamic*** data as a carousel. contains 3 
 // The pre-styled buttons parent container
 .normal-carousel__styled-btn
 ```
-**2- Active on click carousel:**
+**2- Carousel with Active Card:**
 ```
 .active-click-carousel__container
 .active-click-carousel__item
@@ -96,7 +100,7 @@ This widget is used to display the ***dynamic*** data as a carousel. contains 3 
 // The pre-styled buttons parent container
 .active-click-carousel__styled-btn
 ```
-**4- Active on slide carousel:**
+**4- Slider:**
 ```
 .active-slide-carousel__container
 
