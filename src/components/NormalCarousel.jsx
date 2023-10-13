@@ -102,7 +102,7 @@ export default function NormalCarousel(props) {
                         : normalCarouselClasses.normal_item
                 }`}
             >
-                {props.content.get(item)}
+                {props.dataType === "static" ? item.staticContent : props.content.get(item)}
             </div>
         ));
         setDataItems(carouselItems);
@@ -130,7 +130,9 @@ export default function NormalCarousel(props) {
       when getting the item or updated it, rerender the carousel to recalculate the extra items if necessary and reset the active item 
     */
     useEffect(() => {
-        if (props.data?.status === "available") {
+        if (props.dataType === "static") {
+            setupCarouse(props.staticItems);
+        } else if (props.data?.status === "available") {
             setRenderCarousel(false);
             setupCarouse(props.data.items);
         }
@@ -141,7 +143,7 @@ export default function NormalCarousel(props) {
     */
     useEffect(() => {
         // This condition is to prevent calling createCarouselItems before get the items "This happens at the first widget render"
-        if (props.data?.status === "available") {
+        if (props.data?.status === "available" || props.dataType === "static") {
             createCarouselItems();
         }
     }, [dataItems]);

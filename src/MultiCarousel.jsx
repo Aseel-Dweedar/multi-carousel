@@ -57,6 +57,8 @@ export function MultiCarousel(props) {
                         defaultResponsive={defaultResponsive}
                         itemsBehavior={props.itemsBehavior}
                         buttonsStyle={props.buttonsStyle}
+                        staticItems={props.staticItems}
+                        dataType={props.dataType}
                     />
                 )) ||
                 (props.carouselType === "slide" && (

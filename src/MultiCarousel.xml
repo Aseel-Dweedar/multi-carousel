@@ -15,64 +15,89 @@
     <properties>
         <propertyGroup caption="General">
             <propertyGroup caption="Main">
+                <property key="dataType" type="enumeration" defaultValue="static">
+                    <caption>Data Type</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="static">Static</enumerationValue>
+                        <enumerationValue key="dynamic">Dynamic</enumerationValue>
+                    </enumerationValues>
+                </property>
                 <property key="carouselType" type="enumeration" defaultValue="normal">
                     <caption>Carousel Type</caption>
                     <description />
                     <enumerationValues>
-                        <enumerationValue key="normal">Normal no active</enumerationValue>
-                        <enumerationValue key="active">Active on click</enumerationValue>
-                        <enumerationValue key="slide">Active on Silde</enumerationValue>
+                        <enumerationValue key="normal">Normal Carousel</enumerationValue>
+                        <enumerationValue key="active">Carousel with Active Card</enumerationValue>
+                        <enumerationValue key="slide">Slider</enumerationValue>
                     </enumerationValues>
                 </property>
-            </propertyGroup>
-            <propertyGroup caption="Data Source and Event">
-                <property key="data" type="datasource" isList="true" required="true">
+                <property key="staticItems" type="object" isList="true">
+                    <caption>My Content list</caption>
+                    <description />
+                    <properties>
+                        <propertyGroup caption="Content list group">
+                            <property key="contentName" type="textTemplate" required="false">
+                                <caption>Content Name</caption>
+                                <description />
+                            </property>
+                            <property key="staticContent" type="widgets" required="false">
+                                <caption>Content</caption>
+                                <description />
+                            </property>
+                        </propertyGroup>
+                    </properties>
+                </property>
+                <property key="data" type="datasource" isList="true">
                     <caption>Data source</caption>
                     <description />
                 </property>
                 <property key="action" type="action" dataSource="data" required="false">
                     <caption>Action</caption>
-                    <description>Add onClick action from here.(No onClick sould be added to the content inside this widget, if you wish to do that, use "Normal" type)</description>
+                    <description>
+                        Add onClick action from here.(No onClick sould be added to the content inside this widget, if
+                        you wish to do that, use "Normal" type)
+                    </description>
                 </property>
             </propertyGroup>
-            <propertyGroup caption="Responsive Design">
-                <property key="itemsBehavior" type="enumeration" defaultValue="stretch">
-                    <caption>Items Behavior</caption>
-                    <description>When the number of item is less than the required number for the screen</description>
-                    <enumerationValues>
-                        <enumerationValue key="stretch">Stretch</enumerationValue>
-                        <enumerationValue key="extra">Create Empty Items</enumerationValue>
-                    </enumerationValues>
-                </property>
-                <property key="items425" type="integer" defaultValue="1">
-                    <caption>Items on screen 425PX</caption>
-                    <description>Number of items on screen size 425PX</description>
-                </property>
-                <property key="items640" type="integer" defaultValue="2">
-                    <caption>Items on screen 640PX</caption>
-                    <description>Number of items on screen size 640PX</description>
-                </property>
-                <property key="items1024" type="integer" defaultValue="3">
-                    <caption>Items on screen 1024PX</caption>
-                    <description>Number of items on screen size 1024PX</description>
-                </property>
-                <property key="items1200" type="integer" defaultValue="4">
-                    <caption>Items on screen 1200PX</caption>
-                    <description>Number of items on screen size 1200PX</description>
-                </property>
-                <property key="items1600" type="integer" defaultValue="5">
-                    <caption>Items on screen 1600PX</caption>
-                    <description>Number of items on screen size 1600PX</description>
-                </property>
-                <property key="items2560" type="integer" defaultValue="6">
-                    <caption>Items on screen 2560PX</caption>
-                    <description>Number of items on screen size 2560PX</description>
-                </property>
-                <property key="content" type="widgets" dataSource="data" required="true">
-                    <caption>Content</caption>
-                    <description />
-                </property>
-            </propertyGroup>
+        </propertyGroup>
+        <propertyGroup caption="Responsive Design">
+            <property key="itemsBehavior" type="enumeration" defaultValue="stretch">
+                <caption>Items Behavior</caption>
+                <description>When the number of item is less than the required number for the screen</description>
+                <enumerationValues>
+                    <enumerationValue key="stretch">Stretch</enumerationValue>
+                    <enumerationValue key="extra">Create Empty Items</enumerationValue>
+                </enumerationValues>
+            </property>
+            <property key="items425" type="integer" defaultValue="1">
+                <caption>Items on screen 425PX</caption>
+                <description>Number of items on screen size 425PX</description>
+            </property>
+            <property key="items640" type="integer" defaultValue="2">
+                <caption>Items on screen 640PX</caption>
+                <description>Number of items on screen size 640PX</description>
+            </property>
+            <property key="items1024" type="integer" defaultValue="3">
+                <caption>Items on screen 1024PX</caption>
+                <description>Number of items on screen size 1024PX</description>
+            </property>
+            <property key="items1200" type="integer" defaultValue="4">
+                <caption>Items on screen 1200PX</caption>
+                <description>Number of items on screen size 1200PX</description>
+            </property>
+            <property key="items1600" type="integer" defaultValue="5">
+                <caption>Items on screen 1600PX</caption>
+                <description>Number of items on screen size 1600PX</description>
+            </property>
+            <property key="items2560" type="integer" defaultValue="6">
+                <caption>Items on screen 2560PX</caption>
+                <description>Number of items on screen size 2560PX</description>
+            </property>
+            <property key="content" type="widgets" dataSource="data" required="true">
+                <caption>Content</caption>
+                <description />
+            </property>
         </propertyGroup>
         <propertyGroup caption="Options">
             <propertyGroup caption="Motion">
